@@ -156,5 +156,33 @@ public class SampleSteps {
         assertEquals(age, driver.findElement(By.id("age")).getText());
     }
 
+// Steps for Task 1:
+
+    @Given("^I am on a number page$")
+    public void iAmOnNumberPage() throws Throwable {
+        driver.get("https://kristinek.github.io/site/tasks/enter_a_number");
+    }
+
+    @When("^I enter number: \"([^\"]*)\"$")
+    public void iEnterNumber(String input) throws Throwable{
+        driver.findElement(By.id("numb")).clear();
+        driver.findElement(By.id("numb")).sendKeys(input);
+    }
+    @And("^I click submit number$")
+    public void iClickSubmitNumber() throws Throwable {
+        driver.findElement(By.className("w3-btn")).click();
+    }
+
+    @Then("^I see an error message: \"([^\"]*)\"$")
+    public void iSeeErrorMessage(String message) throws Throwable {
+        assertEquals(message, driver.findElement(By.id("ch1_error")).getText());
+    }
+
+    @Then("^I see a pop-up message: \"([^\"]*)\"$")
+    public void iSeePopUpMessage(String message) throws Throwable {
+        String alertText = driver.switchTo().alert().getText();
+        assertEquals(message, alertText);
+    }
+
 }
 
