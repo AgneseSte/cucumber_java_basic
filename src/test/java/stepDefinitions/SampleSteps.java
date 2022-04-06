@@ -122,11 +122,39 @@ public class SampleSteps {
     }
     @Then("^I am not navigated to age message page$")
     public void iAmNotOnAgeMessagePage() throws Throwable {
-        assertFalse(driver.getCurrentUrl().contains("https://kristinek.github.io/site/examples/age_2.html?name=John&age=55"));
+        assertFalse(driver.getCurrentUrl().contains("https://kristinek.github.io/site/examples/age_2.html"));
     }
 
+    @Given("^I am on feedback page$")
+    public void iAmOnFeedbackPage() throws Throwable {
+        driver.get("https://kristinek.github.io/site/tasks/provide_feedback");
+    }
 
+    @And("^I enter feedback name: \"([^\"]*)\"$")
+    public void iEnterFeedbackName(String name) throws Throwable{
+        driver.findElement(By.id("fb_name")).clear();
+        driver.findElement(By.id("fb_name")).sendKeys(name);
+    }
+    @And("^I enter feedback age: \"([^\"]*)\"$")
+    public void iEnterFeedbackAge(String age) throws Throwable{
+        driver.findElement(By.id("fb_age")).clear();
+        driver.findElement(By.id("fb_age")).sendKeys(age);
+    }
 
+    @And("^I click submit feedback$")
+    public void iClickSubmitFeedback() throws Throwable {
+        driver.findElement(By.className("w3-btn-block")).click();
+    }
+
+    @Then("^I see name value: \"([^\"]*)\"$")
+    public void iSeeFeedbackName(String name) throws Throwable {
+        assertEquals(name, driver.findElement(By.id("name")).getText());
+    }
+
+    @Then("^I see age value: \"([^\"]*)\"$")
+    public void iSeeFeedbackAge(String age) throws Throwable {
+        assertEquals(age, driver.findElement(By.id("age")).getText());
+    }
 
 }
 
