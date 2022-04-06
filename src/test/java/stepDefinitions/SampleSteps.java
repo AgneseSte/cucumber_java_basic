@@ -100,4 +100,22 @@ public class SampleSteps {
     public void iAmOnActionPage() {
         driver.get("https://kristinek.github.io/site/examples/actions");
     }
+
+    @Given("^I am on the locators page$")
+    public void iAmOnTheLocatorsPage() throws Throwable {
+        driver.get("https://kristinek.github.io/site/examples/locators");
+    }
+    @Then("^I should see both locators page headers$")
+    public void iShouldSeeLocatorsPageHeaders() throws Throwable {
+        assertTrue(driver.findElement(By.id("heading_1")).isDisplayed());
+        assertTrue(driver.findElement(By.id("heading_2")).isDisplayed());
+    }
+
+    @And("^Buttons in Locators page are clickable$")
+    public void buttonsInLocatorsPageAreSeen() throws Throwable {
+        assertTrue(driver.findElement(By.name("randomButton1")).isDisplayed());
+        assertTrue(driver.findElement(By.name("randomButton2")).isDisplayed());
+    }
+
 }
+
