@@ -184,5 +184,18 @@ public class SampleSteps {
         assertEquals(message, alertText);
     }
 
+
+    @When("^I select feedback languages$")
+    public void iSelectLanguages(List<String> values) throws Throwable {
+        for (String value : values) {
+            driver.findElement(By.cssSelector("[value='" + value + "']")).click();
+        }
+    }
+
+    @Then("^I can see languages \"([^\"]*)\" in feedback check$")
+    public void feedbackCheckValues(String message) throws Throwable {
+        assertEquals(message, driver.findElement(By.id("language")).getText());
+    }
+
 }
 
