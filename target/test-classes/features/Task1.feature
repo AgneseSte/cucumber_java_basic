@@ -14,7 +14,7 @@ Feature: create 1 scenario outline and 1 scenario for page with url: "https://kr
   @errorMessages
   Scenario Outline: a new scenario outline for error cases
     When I enter number: "<input>"
-    When I click submit number
+    And I click submit number
     Then I see an error message: "<message>"
     @numberTooSmall
     Examples:
@@ -32,5 +32,5 @@ Feature: create 1 scenario outline and 1 scenario for page with url: "https://kr
 
   Scenario:
     When I enter number: "64"
-    When I click submit number
+    And I click submit number
     Then I see a pop-up message: "Square root of 64 is 8.00"

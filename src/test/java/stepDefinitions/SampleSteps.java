@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -104,6 +105,7 @@ public class SampleSteps {
     public void iAmOnTheLocatorsPage() throws Throwable {
         driver.get("https://kristinek.github.io/site/examples/locators");
     }
+
     @Then("^I should see both locators page headers$")
     public void iShouldSeeLocatorsPageHeaders() throws Throwable {
         assertTrue(driver.findElement(By.id("heading_1")).isDisplayed());
@@ -120,6 +122,7 @@ public class SampleSteps {
     public void iSeeAgeError(String message) throws Throwable {
         assertEquals(message, driver.findElement(By.id("error")).getText());
     }
+
     @Then("^I am not navigated to age message page$")
     public void iAmNotOnAgeMessagePage() throws Throwable {
         assertFalse(driver.getCurrentUrl().contains("https://kristinek.github.io/site/examples/age_2.html"));
@@ -131,12 +134,13 @@ public class SampleSteps {
     }
 
     @And("^I enter feedback name: \"([^\"]*)\"$")
-    public void iEnterFeedbackName(String name) throws Throwable{
+    public void iEnterFeedbackName(String name) throws Throwable {
         driver.findElement(By.id("fb_name")).clear();
         driver.findElement(By.id("fb_name")).sendKeys(name);
     }
+
     @And("^I enter feedback age: \"([^\"]*)\"$")
-    public void iEnterFeedbackAge(String age) throws Throwable{
+    public void iEnterFeedbackAge(String age) throws Throwable {
         driver.findElement(By.id("fb_age")).clear();
         driver.findElement(By.id("fb_age")).sendKeys(age);
     }
@@ -164,10 +168,11 @@ public class SampleSteps {
     }
 
     @When("^I enter number: \"([^\"]*)\"$")
-    public void iEnterNumber(String input) throws Throwable{
+    public void iEnterNumber(String input) throws Throwable {
         driver.findElement(By.id("numb")).clear();
         driver.findElement(By.id("numb")).sendKeys(input);
     }
+
     @And("^I click submit number$")
     public void iClickSubmitNumber() throws Throwable {
         driver.findElement(By.className("w3-btn")).click();
@@ -196,6 +201,33 @@ public class SampleSteps {
     public void feedbackCheckValues(String message) throws Throwable {
         assertEquals(message, driver.findElement(By.id("language")).getText());
     }
+
+    // sample 4
+    @Then("^I see genre value: \"([^\"]*)\"$")
+    public void iSeeFeedbackGenre(String genre) throws Throwable {
+        assertEquals(genre, driver.findElement(By.id("gender")).getText());
+
+    }
+
+    @When("^I enter feedback values:$")
+    public void iEnterFeedbackValues(Map<String, String> feedbackInput) throws Throwable {
+        iEnterFeedbackName(feedbackInput.get("name"));
+        iEnterFeedbackAge(feedbackInput.get("age"));
+        driver.findElement(By.xpath("//input[@value='" + feedbackInput.get("genre") + "']")).click();
+    }
+
+    @When("^I enter feedback values as data table:$")
+    public void iEnterFeedbackValuesDataTable(DataTable inputTable) throws Throwable {
+        for (Map<String, String> feedbackInput : inputTable.asMaps(String.class, String.class)) {
+            if (feedbackInput.containsKey("name")) {
+                iEnterFeedbackName(feedbackInput.get("name"));
+            }
+            iEnterFeedbackAge(feedbackInput.get("age"));
+            driver.findElement(By.xpath("//input[@value='" + feedbackInput.get("genre") + "']")).click();
+        }
+
+    }
+
 
 }
 

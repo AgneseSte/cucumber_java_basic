@@ -12,6 +12,7 @@ import pages_sample.*;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class SamplePOSteps {
     private WebDriver driver;
@@ -53,5 +54,15 @@ public class SamplePOSteps {
     public void iEnterValues(Map<String, String> valuesToEnter) throws Throwable {
         agePage.enterName(valuesToEnter.get("name"));
         agePage.enterAge(valuesToEnter.get("age"));
+    }
+    @Then("^I see error: \"([^\"]*)\" using PO$") // or ...([^\"]*)$")
+    public void iSeeAgeError(String errorText) throws Throwable {
+        agePage.checkErrorMessage(errorText);
+    }
+
+
+    @Then("^I remain in age page using PO$")
+    public void iRemainOnAgePage() throws Throwable {
+        assertEquals(agePage.getPageUrl(), driver.getCurrentUrl());
     }
 }
